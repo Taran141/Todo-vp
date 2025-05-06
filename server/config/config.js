@@ -24,8 +24,8 @@ module.exports = {
     DB_NAME: 'todo_gndec',         // Database name
     DB_PASSWORD: 'Wraich@1411',     // Database password
     DB_PORT: 5432,       
-    JWT_SECRET: process.env.JWT_SECRET,
-  JWT_EXPIRE: '1h',          
+    JWT_SECRET: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxLCJ1c2VybmFtZSI6ImV4YW1wbGVVc2VyIn0sImlhdCI6MTc0NjI2ODMyMywiZXhwIjoxNzQ2MjcxOTIzfQ.n9IdOFupobTZypW7Fg56-BQRJoBWeOyoTraMMQrJ1Bo',
+    JWT_EXPIRE: '1h',          
    // Database port (default PostgreSQL port)
   };
  

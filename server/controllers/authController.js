@@ -1,38 +1,37 @@
 const jwt = require('jsonwebtoken');
 const config = require('../config/config');
 const User = require('../models/User');
-// const cors = require('cors');
 
-// app.use(cors());
 // Register user
 exports.register = async (req, res, next) => {
   try {
-    const { username, email, password } = req.body;
+    const { username, email, password, role = 'user' } = req.body;
 
     // Check if user already exists
     let user = await User.findByEmail(email);
     if (user) {
       return res.status(400).json({ message: 'User already exists' });
     }
-
+    
     // Create user
-    user = await User.create(username, email, password);
+    user = await User.create(username, email, password, role);
 
     // Create token payload
     const payload = {
       user: {
-        id: user.id
+        id: user.id,
+        role: user.role
       }
     };
 
     // Generate token
     jwt.sign(
-      payload, 
-      config.JWT_SECRET, 
-      { expiresIn: config.JWT_EXPIRE }, 
+      payload, // Payload should be the second argument
+      config.JWT_SECRET, // The secret key from config
+      { expiresIn: config.JWT_EXPIRE }, // Options such as expiration time
       (err, token) => {
         if (err) throw err;
-        res.status(201).json({ token, user: { id: user.id, username: user.username, email: user.email } });
+        res.status(201).json({ token, user: { id: user.id, username: user.username, email: user.email, role: user.role } });
       }
     );
   } catch (err) {
@@ -60,18 +59,19 @@ exports.login = async (req, res, next) => {
     // Create token payload
     const payload = {
       user: {
-        id: user.id
+        id: user.id,
+        role: user.role
       }
     };
 
     // Generate token
     jwt.sign(
-      payload, 
-      config.JWT_SECRET, 
-      { expiresIn: config.JWT_EXPIRE }, 
+      payload, // Payload should be the second argument
+      config.JWT_SECRET, // The secret key from config
+      { expiresIn: config.JWT_EXPIRE }, // Options such as expiration time
       (err, token) => {
         if (err) throw err;
-        res.json({ token, user: { id: user.id, username: user.username, email: user.email } });
+        res.json({ token, user: { id: user.id, username: user.username, email: user.email, role: user.role } });
       }
     );
   } catch (err) {

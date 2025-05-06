@@ -19,14 +19,22 @@ const Login = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+
+
   const onSubmit = async e => {
     e.preventDefault();
     try {
       setLoading(true);
       setError('');
       const userData = await authService.login({ email, password });
-      login(userData);
-      navigate('/');
+  
+      login(userData); // Store user in context first (optional but cleaner)
+  
+      if (userData.user.role === 'admin') {
+        navigate('/admin');
+      } else {
+        navigate('/');
+      }
     } catch (err) {
       setError(err.response?.data?.message || 'Failed to login');
       console.error('Login error:', err);
@@ -34,7 +42,7 @@ const Login = () => {
       setLoading(false);
     }
   };
-
+  
   return (
     <div className="login-form-container">
       <h1>Sign In</h1>

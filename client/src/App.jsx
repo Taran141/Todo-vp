@@ -8,6 +8,7 @@ import Login from './components/Auth/Login.jsx';
 import Register from './components/Auth/Regsiter.jsx';
 import TaskList from './components/Tasks/TaskList.jsx';
 import PrivateRoute from './components/Common/PrivateRoute.jsx';
+import AdminPanel from './components/Auth/AdminPanel.jsx';
 import './App.css';
 
 function App() {
@@ -21,6 +22,8 @@ function App() {
               <Routes>
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
+                <Route path="/admin" element={<AdminPanel />} />
+
                 <Route 
                   path="/" 
                   element={
